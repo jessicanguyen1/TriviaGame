@@ -1,20 +1,31 @@
+// 30 seconds per question
+// click correct - show image, delay 2 seconds and change to next question and reset timer
+// var correct ++
+
+// click incorrect, RED BORDER ON THE GUESS -- make other guesses unclickable, delay 2 seconds and change to next question -- reset timer
+// var incorrect--
+
+// unanswered
+// make all guesses unclickable, delay 2 seconds, change to next question -- reset timer
+// var unanswered--
 
 
-// Create an array
+// Create an array that stores the questions, the guesses, and if each guess is correct or not
 
 var triviaQuestions = [
     {
         question: "In Aladdin, what is the name of Jasmine’s pet tiger?",
-        answers: {
-            optionOne: {
+        imageSrc: 'assets/images/rajah.png',
+        guesses: {
+            guessOne: {
                 answer: 'Rajah',
                 isCorrect: true
             },
-            optionTwo: {
+            guessTwo: {
                 answer: 'Jafar',
                 isCorrect: false
             },
-            optionThree: {
+            guessThree: {
                 answer: "Abu",
                 isCorrect: false
             }
@@ -22,16 +33,17 @@ var triviaQuestions = [
     },
     {
         question: "In Peter Pan, Captain Hook had a hook on which one of his hands?",
-        answers: {
-            optionOne: {
+        imageSrc: 'assets/images/hook.gif',
+        guesses: {
+            guessOne: {
                 answer: 'His right',
                 isCorrect: false
             },
-            optionTwo: {
+            guessTwo: {
                 answer: 'His left',
-                isCorrect: false
+                isCorrect: true
             },
-            optionThree: {
+            guessThree: {
                 answer: 'Both hands',
                 isCorrect: false
             }
@@ -39,131 +51,107 @@ var triviaQuestions = [
     },
     {
         question: "In the Lion King, where does Mufasa and his family live?",
-        answers: {
-            optionOne: {
+        imageSrc: 'assets/images/simba.png',
+        guesses: {
+            guessOne: {
                 answer: "Antarctica",
                 isCorrect: false
             },
-            optionTwo: {
+            guessTwo: {
                 answer: "Elephant Graveyard",
                 isCorrect: false
             },
-            optionThree: {
+            guessThree: {
                 answer: "Pride Rock",
+                isCorrect: true
+            }
+        }
+    },
+    {
+        question: "In Beauty and the Beast, how many eggs does Gaston eat for breakfast?",
+        imageSrc: 'assets/images/gaston.png',
+        guesses: {
+            guessOne: {
+                answer: "5 dozen",
+                isCorrect: true
+            },
+            guessTwo: {
+                answer: "One",
+                isCorrect: false
+            },
+            guessThree: {
+                answer: "One dozen",
                 isCorrect: false
             }
+
+        }
+    },
+    {
+        question: "Which Disney princess attempts to disguise herself as a man?",
+        imageSrc: 'assets/images/mulan.gif',
+        guesses: {
+            guessOne: {
+                answer: "Snow White",
+                isCorrect: false
+            },
+            guessTwo: {
+                answer: "Mulan",
+                isCorrect: true
+            },
+            guessThree: {
+                answer: "Jasmin",
+                isCorrect: false
+            }
+
+        }
+    },
+    {
+        question: "In Toy Story, what game does Slinky play?",
+        imageSrc: 'assets/images/slinky.png',
+        guesses: {
+            guessOne: {
+                answer: "Connect Four",
+                isCorrect: false
+            },
+            guessTwo: {
+                answer: "Checkers",
+                isCorrect: true
+            },
+            guessThree: {
+                answer: "Chess",
+                isCorrect: false
+            }
+
         }
     }
 ];
 
+// Tracking correct and incorrect guesses
+var correct = 0;
+var incorrect = 0;
+var unanswered = 0;
 
+// Timer Function
 
-// $('#start').on('click', startGame)
+// 31 seconds since delay to screen
+var timer = 31;
+var timerDiv = $('.timer-div');
 
+// Use setIntverval to countdown every 1000ms/1sec
 
+setInterval(function () {
+    loadQuestionOne();
+    if (timer <= 0) {
+        console.log('Out of time');
+        $('.start-game').css('display', 'none')
+        $('.scores p').css('display', 'block')
+    } else {
+        timer--
+        // set the text for the timer div
+        timerDiv.text(timer)
 
-$(document).ready(function () {
-
-
-    // question-1 click handler
-
-    var questionOne = $('.question-1');
-
-    questionOne.click(function () {
-        console.log('click on the first question');
-        $('.question h2').html(triviaQuestions[0].question);
-        $('.question-1').addClass('is-active');
-
-        // display answers
-
-        $('.option-1').html(triviaQuestions[0].answers.optionOne.answer)
-        $('.option-2').html(triviaQuestions[0].answers.optionTwo.answer)
-        $('.option-3').html(triviaQuestions[0].answers.optionThree.answer)
-
-        // check if option-1 is correct
-
-        $('.option-1').click(function () {
-            if (triviaQuestions[0].answers.optionOne.isCorrect) {
-                console.log("Correct!");
-                $(this).addClass('correct');
-            } else {
-                console.log("Wrong!")
-                $(this).addClass('wrong');
-                $(this).removeClass('correct');
-
-            }
-        })
-
-        // check if option-2 is correct
-
-        $('.option-2').click(function () {
-            if (triviaQuestions[0].answers.optionTwo.isCorrect) {
-                console.log("Correct!");
-                $(this).addClass('correct');
-            } else {
-                console.log("Wrong!")
-                $(this).addClass('wrong');
-                $(this).removeClass('correct');
-            }
-        })
-
-        // check if option-3 is correct
-
-        $('.option-3').click(function () {
-            if (triviaQuestions[0].answers.optionThree.isCorrect) {
-                console.log("Correct!");
-                $(this).addClass('correct');
-            } else {
-                console.log("Wrong!")
-                $(this).addClass('wrong');
-                $(this).removeClass('correct');
-            }
-        })
-
-        $('.question-2').addClass('not-active');
-        $('.question-2').removeClass('is-active');
-        $('.question-3').addClass('not-active');
-        $('.question-3').removeClass('is-active');
-    })
-
-    // question-2 click handler
-
-    var questionTwo = $('.question-2');
-
-    questionTwo.click(function () {
-        console.log('click on the second question');
-        $('.question h2').html(triviaQuestions[1].question);
-        $('.question-2').addClass('is-active');
-
-        $('.option-1').html(triviaQuestions[1].answers.optionOne.answer)
-        $('.option-2').html(triviaQuestions[1].answers.optionTwo.answer)
-        $('.option-3').html(triviaQuestions[1].answers.optionThree.answer)
-
-        $('.question-1').addClass('not-active');
-        $('.question-1').removeClass('is-active');
-        $('.question-3').addClass('not-active');
-        $('.question-3').removeClass('is-active');
-    })
-
-
-    // question-3 click handler
-
-    var questionThree = $('.question-3');
-
-    questionThree.click(function () {
-        console.log('click on the third question');
-        $('.question h2').html(triviaQuestions[2].question);
-        $('.question-3').addClass('is-active');
-
-        $('.option-1').html(triviaQuestions[2].answers.optionOne.answer)
-        $('.option-2').html(triviaQuestions[2].answers.optionTwo.answer)
-        $('.option-3').html(triviaQuestions[2].answers.optionThree.answer)
-
-        $('.question-2').addClass('not-active');
-        $('.question-2').removeClass('is-active');
-        $('.question-1').addClass('not-active');
-        $('.question-1').removeClass('is-active');
-    })
+    }
+}, 1000);
 
 
 
@@ -179,11 +167,126 @@ $(document).ready(function () {
 
 
 
-})
-
-// triviaQuestions[0].question === "What year were you born?"
-// triviaQuestions[0].answers.optionOne === "What year were you born?"
 
 
-// triviaQuestions[1].question === "Who is the president?"
-// triviaQuestions[2].question === "Do aliens exists?"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Check Guesses Functions
+
+var guessOne = $('.guess-1');
+var guessTwo = $('.guess-2');
+var guessThree = $('.guess-3');
+
+guessOne.click(function () {
+    console.log("Guess One Clicked")
+
+    // Correct
+
+    $('.question img').attr('src', triviaQuestions[0].imageSrc)
+
+
+
+
+});
+guessTwo.click(function () {
+    console.log("Guess Two Clicked")
+});
+guessThree.click(function () {
+    console.log("Guess Three Clicked")
+});
+
+// Load Question Functions
+
+function loadQuestionOne() {
+
+}
+
+function loadQuestionTwo() {
+    $('.question h2').html(triviaQuestions[1].question);
+    $('.question-1').addClass('is-active');
+
+    // Attach the image src attribute for the First Question
+    $('.question img').attr('src', triviaQuestions[1].imageSrc);
+
+    // display guesses 1-3 for the Second Question
+
+    $('.guess-1').html(triviaQuestions[1].guesses.guessOne.answer)
+    $('.guess-2').html(triviaQuestions[1].guesses.guessTwo.answer)
+    $('.guess-3').html(triviaQuestions[1].guesses.guessThree.answer)
+}
+function loadQuestionThree() {
+    $('.question h2').html(triviaQuestions[2].question);
+    $('.question-1').addClass('is-active');
+
+    // Attach the image src attribute for the First Question
+    $('.question img').attr('src', triviaQuestions[2].imageSrc);
+
+    // display guesses 1-3 for the Third Question
+
+    $('.guess-1').html(triviaQuestions[2].guesses.guessOne.answer)
+    $('.guess-2').html(triviaQuestions[2].guesses.guessTwo.answer)
+    $('.guess-3').html(triviaQuestions[2].guesses.guessThree.answer)
+}
+function loadQuestionFour() {
+    $('.question h2').html(triviaQuestions[3].question);
+    $('.question-1').addClass('is-active');
+
+    // Attach the image src attribute for the First Question
+    $('.question img').attr('src', triviaQuestions[3].imageSrc);
+
+    // display guesses 1-3 for the Fourth Question
+
+    $('.guess-1').html(triviaQuestions[3].guesses.guessOne.answer)
+    $('.guess-2').html(triviaQuestions[3].guesses.guessTwo.answer)
+    $('.guess-3').html(triviaQuestions[3].guesses.guessThree.answer)
+}
+function loadQuestionFive() {
+    $('.question h2').html(triviaQuestions[4].question);
+    $('.question-1').addClass('is-active');
+
+    // Attach the image src attribute for the First Question
+    $('.question img').attr('src', triviaQuestions[4].imageSrc);
+
+    // display guesses 1-3 for the Fifth Question
+
+    $('.guess-1').html(triviaQuestions[4].guesses.guessOne.answer)
+    $('.guess-2').html(triviaQuestions[4].guesses.guessTwo.answer)
+    $('.guess-3').html(triviaQuestions[4].guesses.guessThree.answer)
+}
+function loadQuestionSix() {
+    $('.question h2').html(triviaQuestions[5].question);
+    $('.question-1').addClass('is-active');
+
+    // Attach the image src attribute for the First Question
+    $('.question img').attr('src', triviaQuestions[5].imageSrc);
+
+    // display guesses 1-3 for the Sixth Question
+
+    $('.guess-1').html(triviaQuestions[5].guesses.guessOne.answer)
+    $('.guess-2').html(triviaQuestions[5].guesses.guessTwo.answer)
+    $('.guess-3').html(triviaQuestions[5].guesses.guessThree.answer)
+}
