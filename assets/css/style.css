@@ -1,11 +1,53 @@
-.question-1,
-.question-2,
-.question-3 {
-    width: 120px;
-    height: 60px;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
+h1 {
+    text-align: center;
+    font-family: 'WaltographRegular'; 
+    font-weight: normal; 
+    font-style: normal; 
+    font-size: 100px;
+    color: #ffffff;
+}
+
+body {
+    background-image: url('../images/background.jpg');
+    background-size: 100%;
+}
+
+.timer-div {
+    text-align: center;
+    font-size: 80px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 5px darkblue;
+}
+
+
+/* Every time one of the three buttons are clicked, the h2 will be the question and the image will appear */
+h2 {
+    text-align: center !important;
+    color: #ffffff;
+    font-size: 30px;
+    text-shadow: 0 0 5px darkblue;
+    margin-bottom: 20px;
+}
+
+.question img {
+    width: 50%;
+    padding: 20px;
+    display: block;
+    margin: 20px auto;
+
+}
+
+/* 3 buttons on the bottom */
+.question-one,
+.question-two,
+.question-three,
+.question-four,
+.question-five,
+.question-six {
+    font-size: 40px;
+    color: white !important;
+    text-shadow: 0 0 5px darkblue;
 }
 
 .not-active {
@@ -16,14 +58,25 @@
     background: orange;
 }
 
-.option-1,
-.option-2,
-.option-3 {
-    width: 120px;
+.guess-1,
+.guess-2,
+.guess-3 {
+    cursor: pointer;
+    text-align: center;
     height: 60px;
     padding: 5px;
     border-radius: 5px;
-    border: solid 1px black;
+    color: white;
+    font-size: 30px;
+    border: solid;
+    text-shadow: 0 0 5px darkblue;
+    box-shadow: 1px 2px 20px white;
+}
+
+.guess-1:hover,
+.guess-2:hover,
+.guess-3:hover {
+    background: rgba(110, 45, 110, 0.5);
 }
 
 .correct {
@@ -32,4 +85,11 @@
 
 .wrong{
     background: red;
+}
+
+.scores p{
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    display: none;
 }
